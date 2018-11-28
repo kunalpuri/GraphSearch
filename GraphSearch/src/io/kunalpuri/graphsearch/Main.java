@@ -10,7 +10,6 @@ public class Main {
     private static boolean directed = false;
     
     private static int numVert = 0;
-    private static int count = 0;
 
     public static void main(String[] args) {   
         
