@@ -6,19 +6,9 @@ import java.util.Stack;
 
 public class DFS {
 
-    public static void performDFS(Graph graph, int startVertex) {
+    public static void performDFS(UnweightedGraph graph, int startVertex) {
         
-        if (graph.isDirected() && graph.isWeighted()) {
-            
-            
-            
-        }
-        else if (graph.isDirected() && !graph.isWeighted()) {
-            
-            
-            
-        }
-        else if (!graph.isDirected() && graph.isWeighted()) {
+        if (graph.isDirected()) {
             
             
             

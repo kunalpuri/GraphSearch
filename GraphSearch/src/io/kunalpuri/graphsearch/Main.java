@@ -64,6 +64,24 @@ public class Main {
         }
         else if (weighted && !directed) {
             
+            WeightedGraph graph = new WeightedGraph(numVert, directed);
+            
+            while (sc.hasNextLine()) {
+                
+                graph.addEdge(sc.nextInt(), sc.nextInt(), sc.nextInt());
+                
+            }
+            
+            graph.printGraph();
+            
+            System.out.println("-----------------------------------");
+            System.out.println("");
+            System.out.println("What vertex would you like to begin the searches from?");
+            System.out.println("");
+            System.out.println("-----------------------------------");
+            
+            int startVertex = vertexChooser.nextInt();
+            
             
             
         }
@@ -72,7 +90,7 @@ public class Main {
             System.out.println("Input a pair of integer vertices: ");
             System.out.println("Ex: 3 5 ... creates an edge between 3 and 5");
             
-            Graph graph = new Graph(numVert, weighted, directed);
+            UnweightedGraph graph = new UnweightedGraph(numVert, directed);
             
             while (sc.hasNextLine()) {
                 
@@ -99,7 +117,7 @@ public class Main {
             System.out.println("Input a pair of integer vertices: ");
             System.out.println("Ex: 3 5 ... creates an edge between 3 and 5");
             
-            Graph graph = new Graph(numVert, weighted, directed);
+            UnweightedGraph graph = new UnweightedGraph(numVert, directed);
             
             while (sc.hasNextLine()) {
                 

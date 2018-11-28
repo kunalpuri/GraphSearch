@@ -7,14 +7,9 @@ import java.util.Queue;
 
 public class BFS {
     
-    public static void performBFS(Graph graph, int startVertex) {
+    public static void performBFS(UnweightedGraph graph, int startVertex) {
         
-        if (graph.isDirected() && graph.isWeighted()) {
-            
-            
-            
-        }
-        else if (graph.isDirected() && !graph.isWeighted()) {
+        if (graph.isDirected()) {
             
             ArrayList<Integer> traversal = new ArrayList<Integer>();
             
@@ -64,11 +59,6 @@ public class BFS {
             System.out.println("---------- BFS TRAVERSAL ----------");
             System.out.println(sb.toString());
             System.out.println("-----------------------------------");
-            
-        }
-        else if (!graph.isDirected() && graph.isWeighted()) {
-            
-            
             
         }
         else {

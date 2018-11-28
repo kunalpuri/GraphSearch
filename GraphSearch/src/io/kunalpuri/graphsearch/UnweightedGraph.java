@@ -2,18 +2,11 @@ package io.kunalpuri.graphsearch;
 
 import java.util.LinkedList;
 
-public class Graph {
+public class UnweightedGraph {
     
-    private boolean weighted;
     private boolean directed;
     private int vertices;
     private LinkedList<Integer> adjacencyList[];
-    
-    public boolean isWeighted() {
-        
-        return this.weighted;
-        
-    }
     
     public boolean isDirected() {
         
@@ -33,9 +26,7 @@ public class Graph {
         
     }
 
-    public Graph(int vertices, boolean weighted, boolean directed) {
-        
-        this.weighted = weighted;
+    public UnweightedGraph(int vertices, boolean directed) {
         this.directed = directed;
         
         this.vertices = vertices;
@@ -51,17 +42,7 @@ public class Graph {
     
     public void addEdge(int start, int end) {
         
-        if (weighted && directed) {
-            
-            
-            
-        }
-        else if (weighted && !directed) {
-            
-            
-            
-        }
-        else if (!weighted && directed) {
+        if (directed) {
             
             adjacencyList[start].add(end);
             
