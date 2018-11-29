@@ -81,7 +81,7 @@ public class Main {
             
             int startVertex = vertexChooser.nextInt();
             
-            
+            Dijkstras.performDijsktras(graph, startVertex);                    
             
         }
         else if (!weighted && directed) {
