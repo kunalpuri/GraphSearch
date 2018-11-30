@@ -1,12 +1,16 @@
 package io.kunalpuri.graphsearch;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 public class Dijkstras {
 
-    public static void performDijsktras(WeightedGraph graph, int startVertex) {
+    public static void performDijsktras(WeightedGraph graph, Node startVertex) {
         
         if (graph.isDirected()) {
             
@@ -15,51 +19,49 @@ public class Dijkstras {
         }
         else {
             
-            int[] distance = new int[graph.numVertices() + 1];
-            int[] traversal = new int[graph.numVertices() + 1];
-            boolean[] visited = new boolean[graph.numVertices() + 1];
+            startVertex.setDistance(0);
             
-            for (int i = 0; i < distance.length; i++) {
-                
-                distance[i] = Integer.MAX_VALUE;
-                
-            }
+            Set<Node> settledNodes = new HashSet<>();
+            Set<Node> unsettledNodes = new HashSet<>();
             
-            distance[startVertex] = 0;
+            unsettledNodes.add(startVertex);
             
-            for (int i = 0; i < distance.length; i++) {
+            while (!unsettledNodes.isEmpty()) {
                 
-                int next = findMinVertex(distance, visited);
+                Node current = getClosestNode(unsettledNodes);
+                unsettledNodes.remove(current);
                 
-                visited[next] = true;
-                
-                LinkedList<Integer[]> values = graph.getVertexConnections(next);
-                
-                for (int j = 0; j < values.size(); j++) {
+                for (Entry < Node, Integer> pair : current.getAdjacentNodes().entrySet()) {
                     
-                    int v = values.get(j)[1];
-                    int d = distance[next] + values.get(j)[0];
+                    Node adjacent = pair.getKey();
+                    int weight = pair.getValue();
                     
-                    if (distance[v] > d) {
+                    if (!settledNodes.contains(adjacent)) {
                         
-                        distance[v] = d;
-                        traversal[v] = next;
+                        findMinimumDistance(adjacent, weight, current);
+                        unsettledNodes.add(adjacent);
                         
                     }
                     
                 }
                 
+                settledNodes.add(current);
+                
             }
+            
+            Iterator<Node> itr = settledNodes.iterator();
             
             StringBuilder sb = new StringBuilder();
             
             sb.append("[");
             
-            for (int i = 0; i < traversal.length; i++) {
+            while (itr.hasNext()) {
                 
-                sb.append(" " + traversal[i] + " ");
+                Node curr = itr.next();
                 
-                if (i != traversal.length - 1) {
+                sb.append(" " + curr.getName() + "(" + curr.getDistance() + ")" + " ");            
+                
+                if (itr.hasNext()) {
                     
                     sb.append("->");
                     
@@ -76,24 +78,42 @@ public class Dijkstras {
         }
         
     }
-
-    private static int findMinVertex(int[] distance, boolean[] visited) {
+    
+    private static void findMinimumDistance(Node adjacent, int weight, Node current) {
         
-        int x = Integer.MAX_VALUE;
-        int y = -1;
+        int source = current.getDistance();
         
-        for (int i = 0; i < distance.length; i++) {
+        if (source + weight < adjacent.getDistance()) {
             
-            if (!visited[i] && distance[i] < x) {
+            adjacent.setDistance(source + weight);
+            LinkedList<Node> shortestPath = new LinkedList<>(current.getShortestPath());
+            shortestPath.add(current);
+            adjacent.setShortestPath(shortestPath);
+            
+        }
+        
+    }
+
+    private static Node getClosestNode(Set<Node> unsettledNodes) {
+        
+        Node lowestDistanceNode = null;
+        int lowestDistance = Integer.MAX_VALUE;
+        
+        for (Node node : unsettledNodes) {
+            
+            int nodeDistance = node.getDistance();
+            
+            if (nodeDistance < lowestDistance) {
                 
-                y = i;
-                x = distance[i];
+                lowestDistanceNode = node;
+                lowestDistance = nodeDistance;
                 
             }
             
         }
         
-        return y;
+        return lowestDistanceNode;
     }
+
     
 }
